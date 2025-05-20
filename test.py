@@ -1,5 +1,6 @@
 # racecar
 #Random racecar speed calculations
+#wow this is so cool ig
 laptimes = [360, 358, 362, 370, 350, 355, 359, 365, 360, 358]
 
 def paceperlap(seconds, laps):
