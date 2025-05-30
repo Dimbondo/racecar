@@ -90,14 +90,46 @@ def pvp ():
     else: #if the space is already taken, it is invalid
         clr()
         invalidMessage()
+        updBoard()
+        cvp()
     updBoard()
 #_____________________________________________________________________________________________________________________
 #cvp functions and game
 
 def cvp():
-    print("Computer vs player mode is not implemented yet")
-    input("Press enter to exit")
-    raise SystemExit
+    global turn, board
+    updBoard()
+    checkDraw()
+    if(turn==1):
+        print("player 1's turn") #prints whose turn it is
+        move=input("Enter a number from 1 to 9: ")
+    if move=="" or move.isdigit()==False: #checks if the move is empty or not a number
+        invalidMessage()
+        updBoard()
+        cvp()
+    #it converts it to an int to be used
+    move=int(move)
+    if move>9 or move<1: #if the move is out of range, it is invalid
+        os.system('cls')
+        invalidMessage()
+        updBoard()
+        cvp()
+    if board[move-1]!=X and board[move-1]!=O: #checks if the space is empty
+        if turn==1: #checks whose turn it is
+            board[move-1]=X #changes the board and then changes the turn
+            turn=2
+            if checkWin(X): #checks if the player has won, if they have, it clears the screen and prints the winner
+                clr()
+                print("Player 1 wins!")
+                input("Press enter to exit")
+                raise SystemExit     #exits the game as there is no more code to run
+            cvp() #calls the function again to continue the game
+        else: #computers turn
+            print()#ADD COMPUTER AI HERE          
+    else: #if the space is already taken, it is invalid
+        clr()
+        invalidMessage()
+    updBoard()
 while True: #infinite loop to keep the game running until a gamemode is selected
     if (pInput=="p"):
         pvp() #if the input is not p, it will exit the game
