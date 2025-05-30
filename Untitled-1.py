@@ -8,6 +8,8 @@ X="\033[31mX\033[0m"
 O="\033[34mO\033[0m" 
 turn=1
 board=[1,2,3,4,5,6,7,8,9] 
+
+#all functions for pvp
 def clr(): #function to clear the screen
     os.system('cls')
 def invalidMessage(): #function to print invalid input message
