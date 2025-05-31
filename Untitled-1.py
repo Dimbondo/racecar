@@ -6,7 +6,6 @@ os.system('cls') #clears the screen at the start
 #variables for the game
 X="\033[31mX\033[0m"
 O="\033[34mO\033[0m" 
-Pmove=1
 turn=1
 board=[1,2,3,4,5,6,7,8,9] 
 Win=True
@@ -105,7 +104,7 @@ def canwin(i): #checks if the player can win in the next move
             board[j]=i
             if (checkWin(i)):
                 if i==X:
-                   turn=2 #if the player can win, it changes the turn to the computer
+                   turn=1 #if the player can win, it changes the turn to the computer
                 board[j]=O
                 return
             board[j]=j+1 #if the player cannot win, it resets the space
@@ -114,16 +113,43 @@ def canwin(i): #checks if the player can win in the next move
 
     
 def middle():
-    global board
+    global board, turn
     if board[4]==X or board[4]==O: #if the middle space is taken, it returns false
         ()
     else:
-        board[4]=O #if it is empty, it takes it
+        board[4]=O
+        turn=1 #if it is empty, it takes it
 def cvp():
-    global turn, board, Win, Lose, Pmove
+    global turn, board, Win, Lose
     updBoard()
     checkDraw()
-
+    if turn==2: #if it is the computer's turn
+        middle()
+        canwin(O)
+        if checkWin(O): #checks if the player has won, if they have, it clears the screen and prints the winner
+                clr()
+                print("Computer wins!")
+                input("Press enter to exit")
+                raise SystemExit
+        canwin(X)
+        if turn==1:
+                
+                cvp()
+        else:
+                
+                while True:
+                    Cmove=random.randint(0,8)
+                    if board[Cmove]!=X and board[Cmove]!=O:
+                        board[Cmove]=O
+                        turn=1
+                        if checkWin(O):
+                            clr()
+                            print("Computer wins!")
+                            input("Press enter to exit")
+                            raise SystemExit
+                        cvp()
+                    else: #if the space is already taken, it will try again
+                        continue
     if(turn==1):
         print("player 1's turn") #prints whose turn it is
         Pmove=input("Enter a number from 1 to 9: ")
@@ -147,42 +173,13 @@ def cvp():
                 print("Player 1 wins!")
                 input("Press enter to exit")
                 raise SystemExit     #exits the game as there is no more code to run
-            Pmove=2
+            
             cvp() #calls the function again to continue the game
-        else: #computers turn
-            middle()
-            canwin(O)
-            if checkWin(O): #checks if the player has won, if they have, it clears the screen and prints the winner
-                clr()
-                print("Computer wins!")
-                input("Press enter to exit")
-                raise SystemExit
-            canwin(X)
-            if turn==2:
-                turn=1
-                cvp()
-            else:
-                while True:
-                    Cmove=random.randint(0,8)
-                    if board[Cmove]!=X and board[Cmove]!=O:
-                        board[Cmove]=O
-                        turn=1
-                        if checkWin(O):
-                            clr()
-                            print("Computer wins!")
-                            input("Press enter to exit")
-                            raise SystemExit
-                        cvp()
-                    else: #if the space is already taken, it will try again
-                        continue
-
-
-
-         
     else: #if the space is already taken, it is invalid
         clr()
         invalidMessage()
     updBoard()
+
 while True:
     clr() #clears the screen at the start
     input("Welcome to Tic Tac Toe! Press enter to start") #welcome message
