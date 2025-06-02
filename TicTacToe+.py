@@ -67,6 +67,9 @@ def updBoard():
     print(str(board[3])+" | "+str(board[4])+" | "+str(board[5]))
     print("--+---+--")
     print(str(board[6])+" | "+str(board[7])+" | "+str(board[8]))
+
+
+
 #player vs player mode
 def pvp ():
     global turn, board
@@ -74,19 +77,23 @@ def pvp ():
     checkDraw()
     print("player" + str(turn)+"'s turn") #prints whose turn it is
     move=input("Enter a number from 1 to 9: ")
+    #before any real gameplay, the input is checked to see if its valid
     if move=="" or move.isdigit()==False: #checks if the move is empty or not a number
         invalidMessage()
         updBoard()
         pvp()
     #it converts it to an int to be used
     move=int(move)
+    
     if move>9 or move<1: #if the move is out of range, it is invalid
-        os.system('cls')
+        clr()
         invalidMessage()
         updBoard()
         pvp()
+        
     if board[move-1]!=X and board[move-1]!=O: #checks if the space is empty
-        if turn==1: #checks whose turn it is
+        #player 1 gameplay
+        if turn==1: 
             board[move-1]=X #changes the board and then changes the turn
             turn=2
             if checkWin(X): #checks if the player has won, if they have, it clears the screen and prints the winner
