@@ -4,20 +4,27 @@ os.system('cls') #clears the screen at the start
 
 
 #variables for the game
-X="\033[31mX\033[0m" #colors!
+X="\033[31mX\033[0m"
 O="\033[34mO\033[0m" 
-#player 1 always starts
 turn=1
-#board for recording the state of the board at all times
 board=[1,2,3,4,5,6,7,8,9] 
-#all functions for pvp
-def clr(): #function to clear the screen
+
+
+#_______________________ FUNCTIONS__________________________
+#function to clear the screen
+def clr(): 
     os.system('cls')
-def invalidMessage(): #function to print invalid input message
+
+
+#function to print invalid input message
+def invalidMessage():
     clr()
     print("Invalid input")
     input("Press enter to continue")
-def checkDraw(): #counts the amount of empty spaces, if there are none and no player wins, it is a draw
+
+
+ #counts the amount of empty spaces, if there are none and no player wins, it is a draw
+def checkDraw():
     count=0
     for i in range(9):
         if board[i]!=X and board[i]!=O:
@@ -27,22 +34,32 @@ def checkDraw(): #counts the amount of empty spaces, if there are none and no pl
         print("Draw!")
         input("Press enter to exit")
         raise SystemExit   
-def checkWin(player): #checks if a player has won by checking all possible winning combinations
+
+
+#checks if a player has won by checking all possible winning combinations
+def checkWin(player): 
     count=0
     for i in range(3):
-        if(board[count]==player and board[count+1]==player and board[count+2]==player): #horizontal
+        #horizontal wins
+        if(board[count]==player and board[count+1]==player and board[count+2]==player): 
             return True
         count+=3
     count=0
     for i in range(3):
-        if(board[count]==player and board[count+3]==player and board[count+6]==player):#vertical
+        #vertical wins
+        if(board[count]==player and board[count+3]==player and board[count+6]==player):
             return True
         count+=1
-    if(board[0]==player and board[4]==player and board[8]==player):#diagonals
+        #diagonals
+    if(board[0]==player and board[4]==player and board[8]==player):
         return True
     if(board[2]==player and board[4]==player and board[6]==player):
         return True   
-def updBoard(): #clears the board and prints the board based on the list
+
+
+
+#clears the board and prints the board based on the list
+def updBoard(): 
     clr()
     global board
     print(str(board[0])+" | "+str(board[1])+" | "+str(board[2]))
@@ -50,8 +67,8 @@ def updBoard(): #clears the board and prints the board based on the list
     print(str(board[3])+" | "+str(board[4])+" | "+str(board[5]))
     print("--+---+--")
     print(str(board[6])+" | "+str(board[7])+" | "+str(board[8]))
-
-def pvp (): #player vs player
+#player vs player mode
+def pvp ():
     global turn, board
     updBoard()
     checkDraw()
@@ -90,9 +107,7 @@ def pvp (): #player vs player
     else: #if the space is already taken, it is invalid
         clr()
         invalidMessage()
-        updBoard()
-        cvp()
-    updBoard()
+        pvp()
 #_____________________________________________________________________________________________________________________
 #cvp functions and game
 def canwin(i): #checks if the player can win in the next move
