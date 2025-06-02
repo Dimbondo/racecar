@@ -4,13 +4,12 @@ os.system('cls') #clears the screen at the start
 
 
 #variables for the game
-X="\033[31mX\033[0m"
+X="\033[31mX\033[0m" #colors!
 O="\033[34mO\033[0m" 
+#player 1 always starts
 turn=1
+#board for recording the state of the board at all times
 board=[1,2,3,4,5,6,7,8,9] 
-Win=True
-Lose=False
-
 #all functions for pvp
 def clr(): #function to clear the screen
     os.system('cls')
@@ -52,8 +51,7 @@ def updBoard(): #clears the board and prints the board based on the list
     print("--+---+--")
     print(str(board[6])+" | "+str(board[7])+" | "+str(board[8]))
 
- #first board print
-def pvp ():
+def pvp (): #player vs player
     global turn, board
     updBoard()
     checkDraw()
